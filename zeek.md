@@ -77,7 +77,7 @@ Description=Zeek Network Analysis Engine
 After=network.target
 
 [Service]
-Tpe=forking
+Type=forking
 user=zeek
 ExecStart=/usr/bin/zeekctl deploy
 ExecStop=/usr/bin/zeekctl stop
