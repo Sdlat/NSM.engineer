@@ -63,7 +63,7 @@ fi
   eth port 2 on tap to lan2 on pfsense
 
    ssh admin@172.16.50.100
-   cd /etc/yum/repos.d
+   cd /etc/yum.repos.d
    ll
    sudo yum install tcpdump --disablerepo=* --enablerepo=local*
    y
