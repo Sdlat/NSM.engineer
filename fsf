@@ -1,0 +1,93 @@
+#FSF
+
+sudo yum install fsf
+y
+sudo vi /opt/fsf/fsf-server/conf/config.py        should start with !/usr/bin/env/python
+  line 9 change log_path to '/data/fsf/logs'
+  line 10 change yara_path to '/var/lib/yara-rules/rules.yara'
+  line 11 change PID_PATH to '/run/fsf/fsf.pid'
+  line 12 '/data/fsf/archive'
+  line 18 change to 'SERVER_CONFIG = { 'IP_ADDRESS' : "localhost",'
+  :wq
+cd /data
+ll
+sudo mkdir -p /data/fsf/{logs,archive}
+cd fsf
+ll
+sudo chown -R fsf: /data/fsf
+sudo chmod -R 0755 /data/fsf
+ll
+  sudo vi /opt/fsf/fsf-client/conf/config.py        just checking it here, start with !/usr/bin/env/python, local ip should be 127.0.0.1
+sudo vi /etc/systemd/system/fsf.conf      makes new file
+  ```
+  [Unit]
+  Description=File Scanning Framework (FSF-Server) Service
+  After=network.target
+
+  [Service]
+  Type=forking
+  User=fsf
+  Group=fsf
+  WorkingDirectory=/
+  PIDFile=/run/fsf/fsf.pid
+  PermissionsStartOnly=true
+  ExecStartPre=/bin/mkdir -p /run/fsf
+  ExecStartPre=/bin/chown -R fsf:fsf /run/fsf
+  ExecStartPre=/opt/fsf/fsf-server/main.py start
+  ExecStop=/opt/fsf/fsf-server/main.py stop
+  ExecReload=/opt/fsf/fsf-server/main.py restart
+
+  [Install]
+  WantedBy=multi-user.target
+  ```
+  :wq
+
+sudo systemctl start fsf        can reload instead
+^start^status
+
+  Test the thing
+    cd
+    touch test
+    vi test         put in anything
+    /opt/fsf/fsf-client/fsf_client.py --full test
+        check in /data/fsf/logs/rockout.log             should result in an error?
+
+sudo mkdir /data/zeek/extracted_files
+sudo chown -R zeek: /data/zeek/extracted_files
+sudo chmod 0755 /data/zeek/extracted_files
+sudo vi /usr/share/zeek/site/scripts/extract_files.zeek         should be blank
+```
+@load /usr/share/zeek/policy/frameworks/files/extract-all-files.zeek
+redef FileExtract::prefix = "/data/zeek/extracted_files/";
+redef FileExtract::default_limit = 1048576000;
+
+```
+
+sudo vi /usr/share/zeek/site/local.zeek
+  add new last line '@load ./scripts/extract_files.zeek'
+  :wq
+
+sudo systemctl restart zeek
+sudo systemctl status zeek
+    control+r to reverse search in terminal
+    a semi colon was missing and the journalctl pointed at a plug in not working even tho we never touched it
+cd
+sudo curl -LO http://192.168.2.20:8080/putty.exe
+ls -l /data/zeek/extracted_files/
+  cd /data/zeek/extracted_files
+  file *filename*
+
+cd /usr/share/zeek/site/scripts
+sudo curl -LO http://192.168.2.20:8080/zeek_scripts/fsf.zeek
+sudo vi fsf.zeek        starts with put this in
+  line 10 change 'extract_files' to 'extracted_files'
+  esc
+  :wq
+sudo vi /usr/share/zeek/site/local.zeek
+  add new final line '@load ./scripts/fsf.zeek'
+  ;wq
+sudo systemctl restart zeek
+^restart^status
+
+sudo curl -LO http://192.168.2.20:8080/putty.exe
+cat /data/fsf/logs/rockout.log | wc -l
