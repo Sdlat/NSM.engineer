@@ -21,7 +21,7 @@ cd /etc/yum.repos.d
   y
   sudo systemctl reboot
 
-  ssh admin@172.168.50.100
+  ssh admin@172.16.50.100
   cd /etc/yum.repos.d
   ls -l
   sudo rm -rf CentOS-*
@@ -33,6 +33,6 @@ cd /etc/yum.repos.d
   sudo systemctl reboot
 
   ssh admin@172.16.50.100
-  cd /etc/yum/repos.d
+  cd /etc/yum.repos.d
   ls -l
     if centos repos are back kill them
