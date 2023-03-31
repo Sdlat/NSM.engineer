@@ -51,5 +51,5 @@ systemctl enable suricata
 curl -LO 192.168.2.20:8080/all-class-files.zip
 cd /data/suricata
 ll
-  should see eve.json
+  should see eve.json, if no eve.json check suricata yaml
 cat eve.json | jq
