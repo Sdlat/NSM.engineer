@@ -7,7 +7,7 @@ sudo vi /opt/fsf/fsf-server/conf/config.py        should start with !/usr/bin/en
   line 10 change yara_path to '/var/lib/yara-rules/rules.yara'
   line 11 change PID_PATH to '/run/fsf/fsf.pid'
   line 12 '/data/fsf/archive'
-  line 18 change to 'SERVER_CONFIG = { 'IP_ADDRESS' : "localhost",'
+  line 18 change to 'SERVER_CONFIG = { 'IP_ADDRESS' : "172.16.50.100",'
   :wq
 cd /data
 ll
@@ -17,7 +17,8 @@ ll
 sudo chown -R fsf: /data/fsf
 sudo chmod -R 0755 /data/fsf
 ll
-  sudo vi /opt/fsf/fsf-client/conf/config.py        just checking it here, start with !/usr/bin/env/python, local ip should be 127.0.0.1
+  sudo vi /opt/fsf/fsf-client/conf/config.py
+    line 9 change local ip to 172.16.50.100
 sudo vi /etc/systemd/system/fsf.conf      makes new file
   ```
   [Unit]
