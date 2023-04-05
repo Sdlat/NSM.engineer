@@ -12,7 +12,7 @@
       zeek.cfg
 
 ssh admin@172.16.50.100
-sudo yum install zeek-plugin-kafka zeek-plugin-af_packet        <might need to install zeek on its own, mine didn't before
+sudo yum install zeek zeek-plugin-kafka zeek-plugin-af_packet
 y
   sudo vi /etc/zeek/networks.cfg    <to make changes, we aren't right now
 sudo vi /etc/zeek/zeekctl.cfg
