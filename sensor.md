@@ -138,7 +138,7 @@ Creating volume groups
 
   vg_data (creat new volume group, 1Tb disk, vg_data)
     /data/stenographer      (500G)
-    /data/suricacta         (25G)
+    /data/suricata         (25G)
     /data/kafka             (100G)
     /data/zeek              (25G)
     /data/fsf               (10G)
@@ -162,25 +162,26 @@ ip a
   eno1 should be static ip we set it to
 
 #on student laptop
-  open terminal
-  ssh admin@172.16.50.100
-      First time booting go here /home/student/.ssh/known_hosts and delete
-  yes
-  password
-  sudo vi /etc/sysconfig/network-scripts/ifcfg-eno1
-  password
-    change all ipv6 options from yes to no (i to get in, )
-    verify name of device to eno1 and onboot to yes
-    esc key
-    :wq
-  sudo vi /etc/sysctl.conf
-  password
-    at the end of the script enter twice
-    net.ipv6.conf.all.disable_ipv6=1
-    net.ipv6.conf.default.disable_ipv6=1
-    esc
-    :wq
-  sudo vi /etc/hosts
-    Go to second line (ipv6 line) and dd
-    :wq
-  sudo sysctl -p
+
+open terminal
+ssh admin@172.16.50.100
+    First time booting go here /home/student/.ssh/known_hosts and delete
+yes
+password
+sudo vi /etc/sysconfig/network-scripts/ifcfg-eno1
+password
+  change all ipv6 options from yes to no (i to get in, )
+  verify name of device to eno1 and onboot to yes
+  esc key
+  :wq
+sudo vi /etc/sysctl.conf
+password
+  at the end of the script enter twice
+  net.ipv6.conf.all.disable_ipv6=1
+  net.ipv6.conf.default.disable_ipv6=1
+  esc
+  :wq
+sudo vi /etc/hosts
+  Go to second line (ipv6 line) and dd
+  :wq
+sudo sysctl -p
