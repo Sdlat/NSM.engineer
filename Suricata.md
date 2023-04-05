@@ -3,7 +3,7 @@
 
 (still ssh into 172.16.50.100)
 sudo yum list suricata
-sudo yum install suricata     <might have to do this from home?
+sudo yum install suricata    
 y
 sudo -s
 cd /etc/suricata
@@ -13,7 +13,6 @@ vi suricata.yaml
   :set nu
     line 16 should be 192.168.0.0/16, /8 and /12
   go to line 56
-  i
     change /var/log/suricata/ to /data/suricata
   go to line 60
    change enabled: yes to enabled: no
