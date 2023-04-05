@@ -4,7 +4,7 @@ Google stenographer
   stenotype writes to disk, adds 4 byte header to index and search packet
   stenoread uses queries to retrieve packets from index
 
-ssh admin@172.168.50.100
+ssh admin@172.16.50.100
 sudo yum list stenographer
   should be pulling from local rocknsm
 sudo yum install stenographer
